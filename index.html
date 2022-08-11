@@ -92,20 +92,12 @@
 </head>
 
 <body style=" background-color: #20262C;">
-
   <div class="container">
    <table id="records_table" border='1'>
-		
-        </table>
-     
+        </table>    
     <div id="snackbar" >successfully submitted .</div>
-    
-
   </div>
-
-
 </body>
-
 <script>
 function myFunction() {
   var x = document.getElementById("snackbar");
@@ -113,12 +105,11 @@ function myFunction() {
   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 6000);
 }
 </script>
-
 <script> 
 $(document).ready(function(){ 
 function f1(obj) {
   
- myFunction(); alert("test "+obj);
+ myFunction();
   //$("#btnSubmit").click(function(e){ 
 //var answer=$('textarea').val();
 
@@ -129,19 +120,22 @@ var message = obj.split(",")[2];
 // var id = "3";
 // var displayMessage =  "subject";
 // var message ="msg";
-var link = "https://atlantis-qa4-dashboard.quantela.com/qpa/1.0.0/webhooks/gurugram.com/PAcache?apikey=2ec0083a-3915-4d4a-98ef-466f5b2e427e";
+//var link = "https://atlantis-qa4-dashboard.quantela.com/qpa/1.0.0/webhooks/gurugram.com/PAcache?apikey=2ec0083a-3915-4d4a-98ef-466f5b2e427e";
+var link = "https://fusion-dashboard.lnttic.com/qpa/1.0.0/webhooks/lnttic.com/PAwebhook?apikey=dcf87c51-e56c-4bb7-9113-cb0559a70738";
  
-    var cred={"operation":"signIn","data":{"username":"maheshlnt@gurugram.com","password":"NgIxYC50pqDrf1+ZVEQjXA=="}}
-     var  dataObj= JSON.stringify({"input":[{ 
+      var cred = {"operation": "login", "data": {username: "dileeplnt@lnttic.com", "password": "UGFyYWRpZ21AMTIz"}}
+  //  var cred={"operation":"signIn","data":{"username":"maheshlnt@gurugram.com","password":"NgIxYC50pqDrf1+ZVEQjXA=="}}
+   
+    var  dataObj= JSON.stringify({"input":[{ 
 "id":id,
 "displayMessage":displayMessage,
 "message":message 
 }]});  
-alert(dataObj)
+//alert(dataObj)
     $.ajax({
       type: "POST",
-        url: "https://atlantis-qa4-dashboard.quantela.com/ds/1.0.0/public/sign-in",
-      //	  url: "https://fusion-dashboard.lnttic.com/ds/1.0.0/public/login",
+      //  url: "https://atlantis-qa4-dashboard.quantela.com/ds/1.0.0/public/sign-in",
+      	  url: "https://fusion-dashboard.lnttic.com/ds/1.0.0/public/login",
 //      url: "https://dashboard.karnatakasmartcity.in/ds/1.0.0/public/login",
       headers: {
         "content-type": "application/json"
@@ -150,12 +144,12 @@ alert(dataObj)
     }).done(function (resp) {
         // ============================================  
         var txtValue= resp;
-alert("login success");
+//alert("login success");
         if(txtValue==""||txtValue==null){
          document.getElementById('btnSubmit').disabled = true;
        }
        else
-       { alert("login fail");
+       { //alert("login fail");
         $.ajax({
           type: "POST",
           url: link,
@@ -169,7 +163,7 @@ alert("login success");
          { 
       console.log(dataObj); 
         }else{
-		alert("wrong");
+	 
 		console.log(dataObj);}
       });
 	  //adaptor ingestion
@@ -177,17 +171,17 @@ alert("login success");
      
       }
 
-    }) ; alert("eadsfasd");
+    }) ; 
 
 
   };
  
   //displaying table grid
    
-   var reqInp = [{ "id":"F201","displayMessage":"11-Follow-traffic-rulexx","message":"00600090F201030B01F1"},
-   {    "id":"F202","displayMessage":"22-Follow-traffic-rule","message":"00600090F202030B01F1"},
-   {    "id":"F203","displayMessage":"33-Follow-traffic-rule","message":"00600090F203040B01F1"}];
-	// var reqInp = window.xprops.data.response.data.dataArr;
+  //  var reqInp = [{ "id":"F201","displayMessage":"11-Follow-traffic-rulexx","message":"00600090F201030B01F1"},
+  //  {    "id":"F202","displayMessage":"22-Follow-traffic-rule","message":"00600090F202030B01F1"},
+  //  {    "id":"F203","displayMessage":"33-Follow-traffic-rule","message":"00600090F203040B01F1"}];
+	 var reqInp = window.xprops.data.response.data.dataArr;
             console.log(JSON.stringify(reqInp));
 
             var trHTML = '';
