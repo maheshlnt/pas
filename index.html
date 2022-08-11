@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Imphal webcomponent</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ 
+    <style>
+        .container {
+            margin-top: 3%;
+        }
+
+        .buttons {
+            margin-top: 3px;
+            float: right;
+        }
+
+        #records_table {
+            font-family: 'Noto Sans', sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 12px;
+            font-weight: 400;
+            border: 1px solid grey;
+        }
+
+        #records_table td,
+        #customers th {
+            border: 1px solid grey;
+            padding: 8px;
+            color: blue;
+        }
+
+        #records_table th {
+            padding: 8px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #505559;
+
+        }
+
+        /* .btn.active {
+            background: #337ab7;
+            text-decoration: none;
+        } */
+
+        /* width */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+		#snackbar {
+  visibility: hidden;
+  width: 210px;
+  background-color: #5cb85c;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 2px;
+  position: fixed;
+  z-index: 1;
+  bottom: 1%;
+  font-size: 11px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+    </style>
+  
+</head>
+
+<body style=" background-color: #20262C;">
+
+  <div class="container">
+   <table id="records_table" border='1'>
+		
+        </table>
+     
+    <div id="snackbar" >successfully submitted .</div>
+    
+
+  </div>
+
+
+</body>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 6000);
+}
+</script>
+
+<script> 
+$(document).ready(function(){ 
+function f1(obj) {
+  
+ myFunction(); alert("test "+obj);
+  //$("#btnSubmit").click(function(e){ 
+//var answer=$('textarea').val();
+
+var id = obj.split(",")[0];
+var displayMessage =  (obj.split(",")[1]).replaceAll("-", " ");
+var message = obj.split(",")[2];
+// var link = window.xprops.data.response.data.url;
+// var id = "3";
+// var displayMessage =  "subject";
+// var message ="msg";
+var link = "https://atlantis-qa4-dashboard.quantela.com/qpa/1.0.0/webhooks/gurugram.com/PAcache?apikey=2ec0083a-3915-4d4a-98ef-466f5b2e427e";
+ 
+    var cred={"operation":"signIn","data":{"username":"maheshlnt@gurugram.com","password":"NgIxYC50pqDrf1+ZVEQjXA=="}}
+     var  dataObj= JSON.stringify({"input":[{ 
+"id":id,
+"displayMessage":displayMessage,
+"message":message 
+}]});  
+alert(dataObj)
+    $.ajax({
+      type: "POST",
+        url: "https://atlantis-qa4-dashboard.quantela.com/ds/1.0.0/public/sign-in",
+      //	  url: "https://fusion-dashboard.lnttic.com/ds/1.0.0/public/login",
+//      url: "https://dashboard.karnatakasmartcity.in/ds/1.0.0/public/login",
+      headers: {
+        "content-type": "application/json"
+      },
+      data: JSON.stringify(cred)
+    }).done(function (resp) {
+        // ============================================  
+        var txtValue= resp;
+alert("login success");
+        if(txtValue==""||txtValue==null){
+         document.getElementById('btnSubmit').disabled = true;
+       }
+       else
+       { alert("login fail");
+        $.ajax({
+          type: "POST",
+          url: link,
+          headers: {
+            "authorization": "Bearer " + resp.access_token,
+            "content-type": "application/json"
+          },
+          data:dataObj,
+        }).done(function (data) {
+         if(data)
+         { 
+      console.log(dataObj); 
+        }else{
+		alert("wrong");
+		console.log(dataObj);}
+      });
+	  //adaptor ingestion
+	  
+     
+      }
+
+    }) ; alert("eadsfasd");
+
+
+  };
+ 
+  //displaying table grid
+   
+   var reqInp = [{ "id":"F201","displayMessage":"11-Follow-traffic-rulexx","message":"00600090F201030B01F1"},
+   {    "id":"F202","displayMessage":"22-Follow-traffic-rule","message":"00600090F202030B01F1"},
+   {    "id":"F203","displayMessage":"33-Follow-traffic-rule","message":"00600090F203040B01F1"}];
+	// var reqInp = window.xprops.data.response.data.dataArr;
+            console.log(JSON.stringify(reqInp));
+
+            var trHTML = '';
+            $.each(reqInp, function (i, item) {
+			
+                console.log(item.id+"tewst");
+                var j = i + 1;
+                trHTML += '<tr><td> <button style=width:100% class=btn id=button' + i + '   value=' + item.id + ','+item.displayMessage+','+item.message+' >'+item.displayMessage+' - ' + j + ' </button></td></tr>';
+            });
+
+            $('#records_table').append(trHTML);
+			
+			$("body").on("click", 'button', function(event) {
+                f1($(this).attr('value'));
+				
+            });
+});
+
+</script>
+
+<script src="assets/zoid.js"></script>
+<script src="assets/client-sdk.js"></script>
+</html>
