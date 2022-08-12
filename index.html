@@ -116,14 +116,14 @@ function f1(obj) {
 var id = obj.split(",")[0];
 var displayMessage =  (obj.split(",")[1]).replaceAll("-", " ");
 var message = obj.split(",")[2];
-// var link = window.xprops.data.response.data.url;
+ var link = window.xprops.data.response.data.url;
 // var id = "3";
 // var displayMessage =  "subject";
 // var message ="msg";
 //var link = "https://atlantis-qa4-dashboard.quantela.com/qpa/1.0.0/webhooks/gurugram.com/PAcache?apikey=2ec0083a-3915-4d4a-98ef-466f5b2e427e";
-var link = "https://fusion-dashboard.lnttic.com/qpa/1.0.0/webhooks/lnttic.com/PAwebhook?apikey=dcf87c51-e56c-4bb7-9113-cb0559a70738";
- 
-      var cred = {"operation": "login", "data": {username: "dileeplnt@lnttic.com", "password": "UGFyYWRpZ21AMTIz"}}
+//var link = "https://fusion-dashboard.lnttic.com/qpa/1.0.0/webhooks/lnttic.com/PAwebhook?apikey=dcf87c51-e56c-4bb7-9113-cb0559a70738";
+  var cred = window.xprops.data.response.data.creds;
+    //  var cred = {"operation": "login", "data": {username: "dileeplnt@lnttic.com", "password": "UGFyYWRpZ21AMTIz"}}
   //  var cred={"operation":"signIn","data":{"username":"maheshlnt@gurugram.com","password":"NgIxYC50pqDrf1+ZVEQjXA=="}}
    
     var  dataObj= JSON.stringify({"input":[{ 
@@ -178,10 +178,10 @@ var link = "https://fusion-dashboard.lnttic.com/qpa/1.0.0/webhooks/lnttic.com/PA
  
   //displaying table grid
    
-   var reqInp = [{ "id":"F201","displayMessage":"11-Follow-traffic-rulexx","message":"00600090F201030B01F1"},
-   {    "id":"F202","displayMessage":"22-Follow-traffic-rule","message":"00600090F202030B01F1"},
-   {    "id":"F203","displayMessage":"33-Follow-traffic-rule","message":"00600090F203040B01F1"}];
-	// var reqInp = window.xprops.data.response.data.dataArr;
+   //var reqInp = [{ "id":"F201","displayMessage":"11-Follow-traffic-rulexx","message":"00600090F201030B01F1"},
+  // {    "id":"F202","displayMessage":"22-Follow-traffic-rule","message":"00600090F202030B01F1"},
+  // {    "id":"F203","displayMessage":"33-Follow-traffic-rule","message":"00600090F203040B01F1"}];
+	 var reqInp = window.xprops.data.response.data.dataArr;
             console.log(JSON.stringify(reqInp));
 
             var trHTML = '';
